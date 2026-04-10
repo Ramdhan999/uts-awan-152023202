@@ -1,0 +1,37 @@
+name: Deploy Web ke EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Eksekusi Remote SSH ke Server EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
+            # 1. Download kodingan terbaru dari GitHub
+            if [ ! -d "uts-awan-laporsampah" ]; then
+              git clone https://github.com/Ramdhan999/uts-awan-152023202.git
+            fi
+            cd uts-awan-laporsampah
+            git pull origin main
+            
+            # 2. Pindahin file .env rahasia ke dalem project
+            cp ~/.env .
+            
+            # 3. Bikin Image Docker (Container)
+            sudo docker build -t web-laporsampah .
+            
+            # 4. Matiin web yang lama (kalau ada) biar ga error bentrok
+            sudo docker stop laporsampah-container || true
+            sudo docker rm laporsampah-container || true
+            
+            # 5. Nyalain web yang baru pake Docker! 🚀
+            sudo docker run -d -p 3000:3000 --name laporsampah-container web-laporsampah
