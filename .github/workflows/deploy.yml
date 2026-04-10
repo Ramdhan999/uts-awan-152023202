@@ -17,10 +17,10 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
             # 1. Download kodingan terbaru dari GitHub
-            if [ ! -d "uts-awan-laporsampah" ]; then
+            if [ ! -d "uts-awan-152023202" ]; then
               git clone https://github.com/Ramdhan999/uts-awan-152023202.git
             fi
-            cd uts-awan-laporsampah
+            cd uts-awan-152023202
             git pull origin main
             
             # 2. Pindahin file .env rahasia ke dalem project
