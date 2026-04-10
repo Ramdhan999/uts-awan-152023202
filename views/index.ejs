@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lapor Sampah Liar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <div class="container mt-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold text-success">♻️ Lapor Sampah Liar</h2>
+                    <p class="text-secondary">Bantu jaga kebersihan lingkungan dengan melaporkan tumpukan sampah liar di sekitarmu.</p>
+                </div>
+
+                <div class="card shadow-sm mb-5 border-0 rounded-4">
+                    <div class="card-body p-4">
+                        <h5 class="card-title mb-4 fw-bold border-bottom pb-2">Kirim Laporan Baru</h5>
+                        <form action="/lapor" method="POST" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Lokasi Tumpukan Sampah</label>
+                                <input type="text" class="form-control" name="lokasi" placeholder="Contoh: Jl. Braga No. 10 (Dekat tiang listrik)" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Deskripsi Kondisi</label>
+                                <textarea class="form-control" name="deskripsi" rows="3" placeholder="Ceritakan detail tumpukan sampahnya (misal: bau menyengat, banyak plastik, dll)..." required></textarea>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">Upload Foto Bukti</label>
+                                <input type="file" class="form-control" name="foto" accept="image/*" required>
+                                <div class="form-text">Nanti foto ini bakal masuk ke AWS S3 bro.</div>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-success btn-lg rounded-pill fw-bold">🚀 Lapor Sekarang!</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <h4 class="mb-3 fw-bold text-dark">Daftar Laporan Masuk</h4>
+                <div class="list-group shadow-sm rounded-4">
+                    <% if(laporan.length > 0) { %>
+                        <% laporan.forEach(function(item) { %>
+                            <div class="list-group-item list-group-item-action p-4 border-0 border-bottom">
+                                <div class="d-flex w-100 justify-content-between align-items-center mb-2">
+                                    <h6 class="mb-1 fw-bold text-success"><%= item.lokasi %></h6>
+                                    <span class="badge bg-warning text-dark rounded-pill">Menunggu Penanganan</span>
+                                </div>
+                                <p class="mb-2 text-secondary"><%= item.deskripsi %></p>
+                                <a href="<%= item.foto_url %>" class="btn btn-sm btn-outline-primary rounded-pill" target="_blank">🖼️ Lihat Foto Bukti</a>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <div class="list-group-item text-center text-muted p-5 border-0">
+                            Belum ada laporan yang masuk bro.
+                        </div>
+                    <% } %>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
