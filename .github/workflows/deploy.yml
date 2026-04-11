@@ -34,4 +34,4 @@ jobs:
             sudo docker rm laporsampah-container || true
             
             # 5. Nyalain web yang baru pake Docker! 🚀
-            sudo docker run -d -p 3000:3000 --name laporsampah-container web-laporsampah
+            sudo docker run -d -p 80:3000 --name laporsampah-container web-laporsampah
