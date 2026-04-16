@@ -23,15 +23,15 @@ jobs:
             cd uts-awan-152023202
             git pull origin main
             
-            # 2. Pindahin file .env rahasia ke dalem project
+            # 2. Pindahin file .env
             cp ~/.env .
             
-            # 3. Bikin Image Docker (Container)
+            # 3. Bikin Image Docker
             sudo docker build -t web-laporsampah .
             
-            # 4. Matiin web yang lama (kalau ada) biar ga error bentrok
+            # 4. Matiin web yang lama biar ga error bentrok
             sudo docker stop laporsampah-container || true
             sudo docker rm laporsampah-container || true
             
-            # 5. Nyalain web yang baru pake Docker! 🚀
+            # 5. Nyalain web yang baru pake Docker!
             sudo docker run -d -p 80:3000 --name laporsampah-container web-laporsampah

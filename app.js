@@ -76,7 +76,7 @@ app.post('/lapor', upload.single('foto'), (req, res) => {
 
     // 1. Upload ke S3
     s3.upload(s3Params, (err, data) => {
-        // Hapus file sementara di laptop
+
         fs.unlinkSync(file.path); 
 
         if (err) {
